@@ -1,9 +1,7 @@
 class DataController < ApplicationController
   
   def posts
-    user_id = params[:user_id]
-    
-    facebook_service = Service.where("name = ?", user_id, "facebook").first()
+    facebook_service = Service.where("name = ?", "facebook").first()
     
     if (facebook_service.nil?)
       render :json => "{\"error\":\"Data Not Found\"}"
