@@ -2,7 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   helper :all
-  helper_method :current_user_session, :current_user, :require_user
+  helper_method :current_user_session, :current_user
+  
+  private
   
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
