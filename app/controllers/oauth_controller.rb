@@ -14,7 +14,6 @@ class OauthController < ApplicationController
     if (service.nil?)
       service = Service.new
       service.name = "facebook"
-      service.user_id = current_user.id
     end
     
     service.token = access_token
