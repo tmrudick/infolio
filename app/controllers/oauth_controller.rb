@@ -9,7 +9,7 @@ class OauthController < ApplicationController
     
     access_token = oauth.get_access_token(params[:code])
     
-    service = Service.where("name = ?", current_user.id, "facebook").first()
+    service = Service.where("name = ?", "facebook").first()
     
     if (service.nil?)
       service = Service.new
@@ -20,6 +20,6 @@ class OauthController < ApplicationController
     service.token = access_token
     service.save!
 
-    redirect_to :controller => 'home', :action => 'loggedin'    
+    redirect_to :controller => 'home', :action => 'index'    
   end
 end
