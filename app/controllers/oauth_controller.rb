@@ -1,6 +1,15 @@
 class OauthController < ApplicationController  
   before_filter :requires_auth, :except => ['facebook', 'facebook_callback']
   
+  def index
+    @service_hash = {}
+    @services = Service.all()
+    
+    for service in @services
+      @service_hash[service.name] = true
+    end
+  end
+  
   def logout
     clear_user()
     
@@ -45,7 +54,7 @@ class OauthController < ApplicationController
     service.token = access_token
     service.save!
 
-    redirect_to :controller => 'home', :action => 'index'    
+    redirect_to :action => 'index'    
   end
 
 def twitter_callback

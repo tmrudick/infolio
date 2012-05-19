@@ -2,8 +2,9 @@ Infolio::Application.routes.draw do
   get "twitter/index"
 
   resources :users, :user_sessions
-  
   root :to => 'home#index'
+  
+  match 'dashboard' => 'oauth#index'
   
   # Data endpoints
   match 'data/:user_id/posts' => 'data#posts'

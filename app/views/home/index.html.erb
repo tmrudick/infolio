@@ -1,9 +1,1 @@
-infolio.
-
-<h2>Connected Services</h2>
-<ul>
-  <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
-  <li><%= link_to "Twitter", :controller => 'twitter' %> </li>
-</ul>
-
-<p>userid: <%= current_user.id %>
+Welcome to infolio. <%= link_to "Login with Facebook", auth_facebook_url %> to begin.
