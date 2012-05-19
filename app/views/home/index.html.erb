@@ -3,4 +3,8 @@ infolio.
 <h2>Connected Services</h2>
 <ul>
   <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
+  <li><%= link_to "Twitter", :controller => 'twitter' %> </li>
+
 </ul>
+
+http://localhost:3000/twitter/index.html
