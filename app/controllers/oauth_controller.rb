@@ -11,7 +11,7 @@ class OauthController < ApplicationController
     
     access_token = oauth.get_access_token(params[:code])
     
-    service = Service.where("user_id = ? AND name = ?", current_user.id, "facebook").first()
+    service = Service.where("name = ?", current_user.id, "facebook").first()
     
     if (service.nil?)
       service = Service.new
