@@ -37,6 +37,7 @@ class DataController < ApplicationController
         p.latitude = place['place']['location']['latitude']
         p.longitude = place['place']['location']['longitude']
         p.message = place['message']
+        p.timestamp = place['created_time']
       
         places << p
       rescue

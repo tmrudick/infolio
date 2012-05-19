@@ -19,4 +19,8 @@ class Place
   def name=(name)
     @name = name
   end
+  
+  def timestamp=(time)
+    @timestamp = time
+  end
 end
