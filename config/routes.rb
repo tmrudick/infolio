@@ -10,6 +10,7 @@ Infolio::Application.routes.draw do
   
   # Data endpoints
   match 'data/posts' => 'data#posts'
+  match 'data/places' => 'data#places'
   
   # OAuth callbacks
   match 'auth/facebook' => 'oauth#facebook'
