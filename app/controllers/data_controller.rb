@@ -6,7 +6,8 @@ class DataController < ApplicationController
     facebook_service = Service.where("user_id = ? AND name = ?", user_id, "facebook").first()
     
     if (facebook_service.nil?)
-      render :json => "{error:\"Data Not Found\"}";
+      render :json => "{\"error\":\"Data Not Found\"}"
+      return
     end
     
     graph = Koala::Facebook::API.new(facebook_service.token)
