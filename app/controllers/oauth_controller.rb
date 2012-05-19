@@ -21,4 +21,22 @@ class OauthController < ApplicationController
 
     redirect_to :controller => 'home', :action => 'index'    
   end
+
+def twitter_callback
+   
+    
+    service = Service.where("name = ?", "twitter").first()
+    
+    if (service.nil?)
+      service = Service.new
+      service.name = "twitter"
+    end
+    
+    service.token = params[:token]
+    service.save!
+
+    redirect_to :controller => 'home', :action => 'index'    
+  end
+
+
 end
