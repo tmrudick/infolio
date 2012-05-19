@@ -23,4 +23,16 @@ class Place
   def timestamp=(time)
     @timestamp = time
   end
+  
+  def city=(city)
+    @city = city
+  end
+  
+  def state=(state)
+    @state = state
+  end
+  
+  def country=(country)
+    @country = country
+  end
 end

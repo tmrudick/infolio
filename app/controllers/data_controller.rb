@@ -32,12 +32,14 @@ class DataController < ApplicationController
       begin
         p = Place.new
         p.message = place['message']
+        p.timestamp = place['created_time']
         
         p.name = place['place']['name']
         p.latitude = place['place']['location']['latitude']
         p.longitude = place['place']['location']['longitude']
-        p.message = place['message']
-        p.timestamp = place['created_time']
+        p.city = place['place']['location']['city']
+        p.state = place['place']['location']['state']
+        p.country = place['place']['location']['country']
       
         places << p
       rescue
