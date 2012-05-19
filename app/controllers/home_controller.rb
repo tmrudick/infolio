@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_filter :requires_auth
   
   def index
     @service_hash = {}

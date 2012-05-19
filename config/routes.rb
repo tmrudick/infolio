@@ -2,9 +2,6 @@ Infolio::Application.routes.draw do
   get "twitter/index"
 
   resources :users, :user_sessions
-  match 'login' => 'user_sessions#new', :as => :login
-  match 'logout' => 'user_sessions#destroy', :as => :logout
-  match 'loggedin' => 'home#loggedin'
   
   root :to => 'home#index'
   
@@ -13,6 +10,7 @@ Infolio::Application.routes.draw do
   match 'data/places' => 'data#places'
   
   # OAuth callbacks
+  match 'auth/logout' => 'oauth#logout'
   match 'auth/facebook' => 'oauth#facebook'
   match 'auth/facebook/callback' => 'oauth#facebook_callback'
   
