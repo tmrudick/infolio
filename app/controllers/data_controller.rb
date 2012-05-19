@@ -12,7 +12,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'posts')
+    posts = graph.get_connections('me', 'statuses')
     
     render :json => posts
   end
