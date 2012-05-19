@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  helper_method :current_user
+  
   def requires_auth
     if (session[:user].nil?)
       if (request.format == 'text/html')

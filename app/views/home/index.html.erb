@@ -4,5 +4,6 @@ infolio.
 <ul>
   <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
   <li><%= link_to "Twitter", :controller => 'twitter' %> </li>
-
 </ul>
+
+<p>userid: <%= current_user.id %>

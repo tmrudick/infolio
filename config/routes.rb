@@ -6,8 +6,8 @@ Infolio::Application.routes.draw do
   root :to => 'home#index'
   
   # Data endpoints
-  match 'data/posts' => 'data#posts'
-  match 'data/places' => 'data#places'
+  match 'data/:user_id/posts' => 'data#posts'
+  match 'data/:user_id/places' => 'data#places'
   
   # OAuth callbacks
   match 'auth/logout' => 'oauth#logout'
