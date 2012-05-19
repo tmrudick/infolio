@@ -1,11 +1,10 @@
 class HomeController < ApplicationController
   before_filter :require_user, :only => [:loggedin]
   
-  def index
-    
+  def index    
   end
   
   def loggedin
-    render :text => "Logged in!"
+    @services = Service.where('user_id = ?', current_user.id)
   end
 end

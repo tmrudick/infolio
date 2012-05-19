@@ -5,6 +5,11 @@ Infolio::Application.routes.draw do
   match 'loggedin' => 'home#loggedin'
   
   root :to => 'home#index'
+  
+  # OAuth callbacks
+  match 'auth/facebook' => 'oauth#facebook'
+  match 'auth/facebook/callback' => 'oauth#facebook_callback'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

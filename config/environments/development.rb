@@ -34,4 +34,6 @@ Infolio::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  (Koala.http_service.http_options[:ssl] ||= {})[:ca_file] = '/opt/local/share/curl/curl-ca-bundle.crt'
 end
