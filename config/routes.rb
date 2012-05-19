@@ -6,6 +6,9 @@ Infolio::Application.routes.draw do
   
   root :to => 'home#index'
   
+  # Data endpoints
+  match 'data/:user_id/posts' => 'data#posts'
+  
   # OAuth callbacks
   match 'auth/facebook' => 'oauth#facebook'
   match 'auth/facebook/callback' => 'oauth#facebook_callback'
