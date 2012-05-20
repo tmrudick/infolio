@@ -6,7 +6,7 @@
 		<div id="profile">
 			<div id="content">
 				<h1><%= current_user.first_name %></h1>
-				<p>A fun loving computer programmer with ever an ever-expanding mop of hair.</p>
+				<p><%= Twitter.user("#{current_user.twitter}").description %></p>
 				<br>
 				<p>Connected Services
 				<ul>
@@ -44,6 +44,11 @@
 			<div class="block3">
 				<p>Most Active Friends</p>
 				<hr>
+				<p>
+				Last Seen in: <%= Twitter.user("#{current_user.twitter}").location %><br>
+				Number of Tweets: <%= Twitter.user("#{current_user.twitter}").statuses_count %> <br>
+				Followers: <%= Twitter.user("#{current_user.twitter}").followers_count %>
+				</p>
 			</div>
 		</div>
 		<div id="module4">
