@@ -31,14 +31,20 @@
 			<div class="block1">
 				<p>Friend Network</p>
 				<hr>
+				<div id="circle1"> 
+    		</div>
 			</div>
 			<div class="block1">
-				<p>Type of Check-Ins</p>
+				<p>Type of Posts</p>
 				<hr>
+				<div id="circle2"> 
+    		</div>
 			</div>
 			<div class="block1">
 				<p>Type of Likes</p>
 				<hr>
+				<div id="circle3"> 
+    		</div>
 			</div>
 		</div>
 		<div id="module2">
@@ -113,17 +119,57 @@
 
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCv31jeSAZxiIvrNbXd69mJVi2Md38e1Oc&sensor=false"></script>
 <script type="text/javascript">
-  var postData;
-  var getPosts = $.get("/data/<%= current_user.id %>/posts", function(results) {
-    postData = results;
-  });
-  
-  var placesData;
-
-  var placesDeferred = $.Deferred();
-
   $(function() {
+    
+    var makeCircleThing = function (elementInfo, dataIn) {
+      var data = dataIn;
+
+			var w = 225,
+			    h = 225,
+			    r = Math.min(w, h) / 2,
+			    color = d3.scale.category10(),
+			    donut = d3.layout.pie().sort(null),
+			    arc = d3.svg.arc().innerRadius(r - 50).outerRadius(r - 10);
+			
+			var svg = d3.select(elementInfo).append("svg:svg")
+			    .attr("width", w)
+			    .attr("height", h)
+			    .append("svg:g")
+			    .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+			
+			var arcs = svg.selectAll("path")
+			    .data(donut(data))
+			  .enter().append("svg:path")
+			    .attr("fill", function(d, i) { return color(i); })
+			    .attr("d", arc)
+			    .each(function(d) { this._current = d; });
+			
+			d3.select(elementInfo).on("click", function() {
+			  data = data === data ? data : data; // swap the data
+			  arcs = arcs.data(donut(data)); // update the data
+			  arcs.attr("d", arc); // redraw the arcs
+			});
+			
+			// Store the currently-displayed angles in this._current.
+			// Then, interpolate from this._current to the new angles.
+			function arcTween(a) {
+			  var i = d3.interpolate(this._current, a);
+			  this._current = i(0);
+			  return function(t) {
+			    return arc(i(t));
+			  };
+			} 
+    }
+    
     var lowSat = [{featureType: "all",stylers: [{ saturation: -100 }]}];
+    
+    // fake data
+    makeCircleThing("#circle1", [1,2,3,4,5]);
+    
+    
+    // fake data
+    makeCircleThing("#circle3", [234,234235,3,234]);
+    
     
     var myOptions = {
     	mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -136,13 +182,13 @@
     	streetViewControl: false,
     	overviewMapControl: false
     };
+    
     var map = new google.maps.Map(document.getElementById("map"), myOptions);
     
-    $.get("/data/<%= current_user.id %>/places", function(results) {
-      placesData = results;
+    var placePromise = $.get("/data/<%= current_user.id %>/places", function(results) {
       var bounds = new google.maps.LatLngBounds();
-      for (var i in placesData) {
-        var place = placesData[i];
+      for (var i in results) {
+        var place = results[i];
         var myLatlng = new google.maps.LatLng(place.latitude,place.longitude);
         bounds.extend(myLatlng);
         var marker = new google.maps.Marker({
@@ -152,8 +198,48 @@
         });
       }
       map.fitBounds(bounds);
-      placesDeferred.resolve;
-    });    
+    });
+    
+    var postPromise = $.get("/data/<%= current_user.id %>/posts", function(results) {
+    });
+    
+    var photosPromise = $.get("/data/<%= current_user.id %>/photos", function(results) {
+    });
+    
+    $.when(placePromise, postPromise, photosPromise).then(
+      function(placeJSON, postJSON, photosJSON){
+          var days = [];
+          days.push(0);
+          days.push(0);
+          days.push(0);
+          days.push(0);
+          days.push(0);
+          days.push(0);
+          days.push(0);
+          
+          // real data
+          makeCircleThing("#circle2", [postJSON[0].length, placeJSON[0].length, photosJSON[0].length]);
+
+          for (var i in postJSON) {
+            datestr = postJSON[0][i].updated_time;
+            date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
+            days[date.getDay()]++;
+          }
+          
+          for (var j in placeJSON) {    
+            datestr = placeJSON[0][j].timestamp;
+            date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
+            days[date.getDay()]++;
+          }
+          
+          for (var k in photosJSON) {    
+            datestr = photosJSON[0][k].created_time;
+            date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
+            days[date.getDay()]++;
+          }
+
+
+        });
   });
   
   $.when(placesDeferred.promise()).then(function() {
