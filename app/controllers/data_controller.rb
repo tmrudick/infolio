@@ -15,7 +15,9 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'statuses')
+    
+  
+    posts = graph.get_connections('me', 'statuses', { 'since' => 63.days.ago })
     
     render :json => posts
   end
@@ -32,7 +34,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'photos')
+    posts = graph.get_connections('me', 'photos', { 'since' => 63.days.ago })
     
     render :json => posts
   end
@@ -66,7 +68,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
     
-    raw_places = graph.get_connections('me', 'checkins')
+    raw_places = graph.get_connections('me', 'checkins', { 'since' => 63.days.ago })
     
     places = []
     for place in raw_places
@@ -101,7 +103,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'statuses')
+    posts = graph.get_connections('me', 'statuses', { 'since' => 63.days.ago })
     
     messages = []
     posts.each {|p| messages << p["message"]}

@@ -135,6 +135,7 @@
     	overviewMapControl: false
     };
     var map = new google.maps.Map(document.getElementById("map"), myOptions);
+    
     $.get("/data/<%= current_user.id %>/places", function(results) {
       placesData = results;
       var bounds = new google.maps.LatLngBounds();
@@ -149,6 +150,6 @@
         });
       }
       map.fitBounds(bounds);
-    });
+    });    
   });
 </script>
