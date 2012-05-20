@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require "word_counter.rb"
 
+
 class DataController < ApplicationController
   @@maxTime = 763
   
@@ -134,4 +135,6 @@ class DataController < ApplicationController
     render :json => frequency_table
     
   end
+  
+  
 end

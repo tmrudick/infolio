@@ -22,11 +22,35 @@
 		<div id="avatar">
 		<%= image_tag "/data/#{current_user.id}/profilePic", :class => "profilePic"%>
 		</div>
+		
 		<div id="module1">
 			<div class="block1">
-				<p>Friend Network</p>
+				<p>Hashtags</p>
 				<hr>
-				<div id="circle1"> 
+				<div id="circle1" class="statscaption force"> 
+				
+				
+				<!-- Get latest hashtags -->
+				<% @tweets = Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 20, :type => "recent") %>
+  				<% hashCounts = Hash.new(0)
+  				@tweets.each do |t| 
+  				hash = ((t.hashtags).map(&:text).flatten)
+  				hash.each { |ht| hashCounts[(ht.downcase)] += 1 }
+  				 end %>
+  				
+  				<% hashCounts.each do |key, value|  %>
+  				<% if value > 3 %>
+  				<span class="bigTag">
+  				<% else %>
+  				<span class="smallTag"> 
+  				<% end %>
+  				<%= key %>
+  				</span>
+  				<% end %>
+  				
+  				
+				<!-- END Get latest hashtags -->	
+				
     		</div>
 			</div>
 			<div class="block1">
@@ -60,18 +84,10 @@
 				<!-- END Get latest Tweets -->				
 				</p>
 				
-				<!-- Get latest hashtags -->
-				<% @tweets = Twitter.search("from:#{current_user.twitter} #", :include_entities=>true, :type => "recent") %>
-  				<% result = Hash.new(0)
-  				@tweets.each do |t| 
-  				hash = ((t.hashtags).map(&:text).flatten)
-  				hash.each { |ht| result[(ht.downcase)] += 1 }
-  				 end %>
-  				<p>
-  				Twitter Hashtags: <%= result %>
-  				</p>
-  				
-				<!-- END Get latest Tweets -->	
+				
+				
+				
+					
 				
 				
 				<% else %>
@@ -83,6 +99,8 @@
 				<% end %>
 			</div>
 		</div>
+		
+
 		
 		<div id="module3">
 			<div class="block3">
@@ -103,6 +121,24 @@
 			</div>
 		</div>
 		<div class="clear"></div>
+		
+		<div id="module8">
+		<!-- Get latest pics -->
+				<p class="block3p">Instagram Photos</p>
+				<hr>
+				<% @instaPhotos.each do |p| %>	
+				<script type="text/javascript"> 
+				var js_obj = <%= p.html_safe %>; 
+				//alert(js_obj.url)
+				var i = $('<img src="'+js_obj.url+'" class="instagramImage"/>');
+				$("#module2").append(i);
+				</script>
+				
+				<% end %>
+  				
+				<!-- END Get latest pics -->
+		</div>
+		
 		<div id="module4">
 		  <div class="block4">
 		    <p class="block4p">Places</p>
@@ -159,7 +195,7 @@
     var lowSat = [{featureType: "all",stylers: [{ saturation: -100 }]}];
     
     // fake data
-    makeCircleThing("#circle1", [1,2,3,4,5]);
+   // makeCircleThing("#circle1", [1,2,3,4,5]);
     
     
     // fake data
