@@ -72,8 +72,15 @@ h1 {
 	padding-top:15px;
 }
 
+.tweets{
+	font-family:Segoe UI, helvetica, sans-serif;
+	color: #ccc;
+	font-size: 18px;
+	line-height: 27px;
+}
+
 #content {
-	font-family:"Segoe UI", Helvetica, sans-serif;
+	font-family: Segoe UI, Helvetica, sans-serif;
 	font-weight:100;
 	font-size:16px;
 	color:#fff;
@@ -258,10 +265,11 @@ hr {
 
 
 .statscaption{
-	font-family:"Segoe UI", Helvetica, sans-serif;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	color:#ccc;
 	font-weight:100;
 	font-size:10px;
+	line-height:12px;
 	padding: 5px 0px 2px;
 	letter-spacing:1px;
 	text-transform:none;
@@ -274,7 +282,7 @@ margin-top: 35px;
 margin-left: 24px;
 }
 .statsdata{
-	font-family:"Segoe UI", Helvetica, sans-serif;
+	font-family:Segoe UI, Helvetica, sans-serif;
 	font-weight:100;
 	color:#00ACED;
 	font-size:32px;
