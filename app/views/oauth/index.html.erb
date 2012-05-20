@@ -1,52 +1,9 @@
-<div id="navbar">
-		<div id="logo">
-		</div>
-	</div>
-	<div id="wrapper">
-		<div id="profile">
-			<div id="content">
-				<h1><%= current_user.first_name %></h1>
-				<p>A fun loving computer programmer with ever an ever-expanding mop of hair.</p>
-				<br>
-				<p>Connected Services
-				<ul>
-				  <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
-				  <li><%= link_to "Twitter", :controller => 'twitter' %> <% if current_user.twitter %>- Connected<%end%></li>
-				</ul>
-				</p>
-			</div>
-		</div>
-		<div id="avatar">
-		<%= image_tag "/data/#{current_user.id}/profilePic", :class => "profilePic"%>
-		</div>
-		<div id="module1">
-			<div class="block1">
-				<p>Friend Network</p>
-				<hr>
-			</div>
-			<div class="block1">
-				<p>Type of Check-Ins</p>
-				<hr>
-			</div>
-			<div class="block1">
-				<p>Type of Likes</p>
-				<hr>
-			</div>
-		</div>
-		<div id="module2">
-			<div class="block2">
-				<p>Twitter Activity</p>
-				<hr>
-			</div>
-		</div>
-		<div id="module3">
-			<div class="block3">
-				<p>Most Active Friends</p>
-				<hr>
-			</div>
-		</div>
-		<div id="module4">
-		</div>
-	</div>
+<p>Howdy, <%= current_user.first_name %>.
 
+<h2>Connected Services</h2>
+<ul>
+  <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
+  <li><%= link_to "Twitter", :controller => 'twitter' %> <% if current_user.twitter %>- Connected<%end%></li>
+</ul>
 
+<p>userid: <%= current_user.id %>

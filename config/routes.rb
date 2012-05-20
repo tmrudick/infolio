@@ -6,6 +6,8 @@ Infolio::Application.routes.draw do
   
   match 'dashboard' => 'oauth#index'
   
+  match ':user_id' => 'pages#index'
+  
   # Data endpoints
   match 'data/:user_id/posts' => 'data#posts'
   match 'data/:user_id/places' => 'data#places'
