@@ -14,8 +14,9 @@
 Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 5, :result_type => "recent").map do |status|
   "#{status.hashtags}" 
    end 
-   
-   %>
+%>
+
+
 
 <p>user id: <%= current_user.id %>
 <p>twitter: <%= current_user.twitter %>
