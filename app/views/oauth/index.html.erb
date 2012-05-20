@@ -7,11 +7,13 @@
 			<div id="content">
 				<h1><%= current_user.first_name %></h1>
 				<p>A fun loving computer programmer with ever an ever-expanding mop of hair.</p>
-				<h2>Connected Services</h2>
+				<br>
+				<p>Connected Services
 				<ul>
 				  <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
 				  <li><%= link_to "Twitter", :controller => 'twitter' %> <% if current_user.twitter %>- Connected<%end%></li>
 				</ul>
+				</p>
 			</div>
 		</div>
 		<div id="avatar">
