@@ -18,7 +18,7 @@ body {
 }
 
 #logo {
-	background:url(images/infolio_logo.png) no-repeat transparent;
+	background:url('/assets/infolio_logo.png') no-repeat transparent;
 	height:35px;
 	width:auto;
 	margin-left:25px;
