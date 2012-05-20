@@ -71,7 +71,7 @@ class DataController < ApplicationController
     
     places = []
     for place in fb_places
-      #begin
+      begin
         p = Place.new
         p.message = place['message']
         p.timestamp = Time.parse(place['created_time']).to_i
@@ -84,27 +84,29 @@ class DataController < ApplicationController
         p.country = place['place']['location']['country']
       
         places << p
-      #rescue
-      #end
+      rescue
+      end
     end
     
     foursquare_service = Service.where("user_id = ? AND name = ?", user_id, "foursquare").first()
     
-    client = Foursquare2::Client.new(:oauth_token => foursquare_service.token)
-    foursquare_places = client.user_checkins
-    for place in foursquare_places["items"]
-      begin
-        p = Place.new
-        p.name = place["venue"]["name"]
-        p.timestamp = place["createdAt"]
-        p.latitude = place["venue"]["location"]["lat"]
-        p.longitude = place["venue"]["location"]["lng"]
-        p.city = place["venue"]["location"]["city"]
-        p.state = place["venue"]["location"]["state"]
-        p.country = place["venue"]["location"]["country"]
+    if !foursquare_service.nil?
+      client = Foursquare2::Client.new(:oauth_token => foursquare_service.token)
+      foursquare_places = client.user_checkins
+      for place in foursquare_places["items"]
+        begin
+          p = Place.new
+          p.name = place["venue"]["name"]
+          p.timestamp = place["createdAt"]
+          p.latitude = place["venue"]["location"]["lat"]
+          p.longitude = place["venue"]["location"]["lng"]
+          p.city = place["venue"]["location"]["city"]
+          p.state = place["venue"]["location"]["state"]
+          p.country = place["venue"]["location"]["country"]
         
-        places << p
-      rescue
+          places << p
+        rescue
+        end
       end
     end
 
