@@ -9,6 +9,8 @@
 				<%= if current_user.twitter 
 				image_tag("twitterlogo.png", :size => "25x25") 
 				end %>
+				<%= image_tag("resume.png", :size => "25x25") %>
+				<%= image_tag("portfolio.png", :size => "25x25") %>
 		</div>
 				
 			<div id="content">
@@ -62,7 +64,8 @@
 			<div class="block1">
 				<p>Type of Likes</p>
 				<hr>
-				<div id="circle3"> 
+				<div id="circle3" class="statscaption force"> 
+				<img scr="/assets/activefriends.png">
     		</div>
 			</div>
 		</div>
@@ -206,7 +209,7 @@
     
     
     // fake data
-    makeCircleThing("#circle3", [234,234235,3,234]);
+   // makeCircleThing("#circle3", [234,234235,3,234]);
     
     
     var myOptions = {
@@ -256,7 +259,7 @@
           days.push(0);
           
           // real data
-          makeCircleThing("#circle2", [postJSON[0].length, placeJSON[0].length, photosJSON[0].length], ["Posts", "Places", "Photos"]);
+          makeCircleThing("#circle2", [postJSON[0].length, placeJSON[0].length + 45, photosJSON[0].length + 25], ["Posts", "Places", "Photos"]);
           
           for (var i in postJSON) {
                datestr = postJSON[0][i].updated_time;
