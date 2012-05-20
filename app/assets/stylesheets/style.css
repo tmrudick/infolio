@@ -213,11 +213,13 @@ hr {
 .bigTag{
 	font-size: 32px;
 	margin-right:6px;
+	line-height:28px;
 	color:#0E88B5;
 }
 .smallTag{
 	font-size: 18px;
-	margin-right:6px
+	margin-right:6px;
+	line-height:28px;
 }
 
 #module4 {
