@@ -8,12 +8,13 @@
 				<h1><%= current_user.first_name %></h1>
 				<p><%= Twitter.user("#{current_user.twitter}").description %></p>
 				<br>
-				<p>Connected Services
-				<ul>
-				  <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
-				  <li><%= link_to "Twitter", :controller => 'twitter' %> <% if current_user.twitter %>- Connected<%end%></li>
-				</ul>
-				</p>
+				
+				<div id="socialicons">
+				<%= image_tag("fblogo.png", :size => "25x25") %>
+				<%= if current_user.twitter 
+				image_tag("twitterlogo.png", :size => "25x25") 
+				end %>
+				</div>
 			</div>
 		</div>
 		<div id="avatar">
@@ -38,6 +39,12 @@
 			<div class="block2">
 				<p>Twitter Activity</p>
 				<hr>
+				<p>
+				<%= 
+				Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 5, :result_type => "recent").map do |status|
+					"#{status.text}" 
+ 				  end %>
+				</p>
 			</div>
 		</div>
 		<div id="module3">
