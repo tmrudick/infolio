@@ -46,17 +46,34 @@
 			<div class="block2">
 				<p>Twitter Activity</p>
 				<hr>
+				
 				<% if current_user.twitter %>
 				<p>
-				<%= Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 5, :result_type => "recent").map do |status|
- 				 @tweets = "#{status.text}" 
+				<!-- Get latest Tweets -->
+				<% @tweets = Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 3, :result_type => "recent").map do |status|
+ 				status.text
   					 end 
   				%>
-  				
-  				
- 					  
-								
+  				<% @tweets.each do |t| %>
+  				<p><%= t %> </p><br>
+  				<% end %>
+				<!-- END Get latest Tweets -->				
 				</p>
+				
+				<!-- Get latest hashtags -->
+				<% @tweets = Twitter.search("from:#{current_user.twitter} #", :include_entities=>true, :type => "recent") %>
+  				<% result = Hash.new(0)
+  				@tweets.each do |t| 
+  				hash = ((t.hashtags).map(&:text).flatten)
+  				hash.each { |ht| result[(ht.downcase)] += 1 }
+  				 end %>
+  				<p>
+  				Twitter Hashtags: <%= result %>
+  				</p>
+  				
+				<!-- END Get latest Tweets -->	
+				
+				
 				<% else %>
 				
 				Give us your twitter handle
