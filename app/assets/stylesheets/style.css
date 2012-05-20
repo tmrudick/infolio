@@ -126,7 +126,7 @@ hr {
 }
 
 #postcat {
-	margin:auto;
+	margin:5px auto auto auto;
 	height:225px;
 	width:225px;
 	background:transparent;
