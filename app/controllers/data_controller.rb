@@ -15,8 +15,6 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    
-  
     posts = graph.get_connections('me', 'statuses', { 'since' => 63.days.ago })
     
     render :json => posts
@@ -93,8 +91,8 @@ class DataController < ApplicationController
   end
 
   def words
-
-    facebook_service = Service.where("name = ?", "facebook").first()
+    user_id = params[:user_id]
+    facebook_service = Service.where("user_id = ? AND name = ?", user_id, "facebook").first()
     
     if (facebook_service.nil?)
       render :json => "{\"error\":\"Data Not Found\"}"
