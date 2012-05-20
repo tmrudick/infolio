@@ -66,6 +66,13 @@ h1 {
 	z-index:1000;
 	position:relative;
 	top:-185px;
+}
+
+.profilePic {
+	width:160px;
+	height:160px;
+	z-index:1000;
+	position:relative;
 	left:25px;
 }
 
