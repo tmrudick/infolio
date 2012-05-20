@@ -2,6 +2,7 @@
 require "word_counter.rb"
 
 class DataController < ApplicationController
+  @@maxTime = 763
   
   def posts
     user_id = params[:user_id]
@@ -15,7 +16,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'statuses', { 'since' => 63.days.ago })
+    posts = graph.get_connections('me', 'statuses', { 'since' => @@maxTime.days.ago })
     
     render :json => posts
   end
@@ -32,7 +33,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'photos', { 'since' => 63.days.ago })
+    posts = graph.get_connections('me', 'photos', { 'since' => @@maxTime.days.ago })
     
     render :json => posts
   end
@@ -66,7 +67,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
     
-    raw_places = graph.get_connections('me', 'checkins', { 'since' => 63.days.ago })
+    raw_places = graph.get_connections('me', 'checkins', { 'since' => @@maxTime.days.ago })
     
     places = []
     for place in raw_places
@@ -101,7 +102,7 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
   
-    posts = graph.get_connections('me', 'statuses', { 'since' => 63.days.ago })
+    posts = graph.get_connections('me', 'statuses', { 'since' => @@maxTime.days.ago })
     
     messages = []
     posts.each {|p| messages << p["message"]}
