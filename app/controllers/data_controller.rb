@@ -17,6 +17,35 @@ class DataController < ApplicationController
     render :json => posts
   end
   
+  def profilePic
+    facebook_service = Service.where("name = ?", "facebook").first()
+    
+    if (facebook_service.nil?)
+      render :json => "{\"error\":\"Data Not Found\"}"
+      return
+    end
+    
+    graph = Koala::Facebook::API.new(facebook_service.token)
+  
+    albums = graph.get_connections('me', 'albums')
+    
+    profilePic = nil
+    
+    for album in albums
+      begin
+        if (album["name"] == "Profile Pictures") 
+          done = 1
+          images = graph.get_connections(album["id"], 'photos')
+          profilePic = images[0]["source"]
+          break
+        end
+      rescue
+      end
+    end
+    
+    redirect_to profilePic
+  end
+  
   def places
     user_id = params[:user_id]
     

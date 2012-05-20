@@ -18,7 +18,7 @@ class OauthController < ApplicationController
   
   def facebook
     oauth = Koala::Facebook::OAuth.new
-    redirect_to oauth.url_for_oauth_code(:permissions => "user_about_me,user_status")
+    redirect_to oauth.url_for_oauth_code(:permissions => "user_about_me,user_status,user_photos")
   end
   
   def facebook_callback
