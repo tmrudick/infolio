@@ -12,7 +12,7 @@
 
 <%= 
 Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 5, :result_type => "recent").map do |status|
-  "#{status.text}" 
+  "#{status.text} #{status.hashtags}" 
    end 
    
    %>
