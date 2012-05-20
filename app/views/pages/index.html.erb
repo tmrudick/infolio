@@ -121,10 +121,8 @@
 <script type="text/javascript">
   $(function() {
     
-    var makeCircleThing = function (elementInfo) {
-      var data1 = [53245, 28479, 19697, 24037, 40245],
-			    data2 = [200, 200, 200, 200, 200],
-			    data = data1;
+    var makeCircleThing = function (elementInfo, dataIn) {
+      var data = dataIn;
 
 			var w = 225,
 			    h = 225,
@@ -147,7 +145,7 @@
 			    .each(function(d) { this._current = d; });
 			
 			d3.select(elementInfo).on("click", function() {
-			  data = data === data1 ? data2 : data1; // swap the data
+			  data = data === data ? data : data; // swap the data
 			  arcs = arcs.data(donut(data)); // update the data
 			  arcs.attr("d", arc); // redraw the arcs
 			});
@@ -165,9 +163,12 @@
     
     var lowSat = [{featureType: "all",stylers: [{ saturation: -100 }]}];
     
-    makeCircleThing("#circle1");
-    makeCircleThing("#circle2");
-    makeCircleThing("#circle3");
+    // fake data
+    makeCircleThing("#circle1", [1,2,3,4,5]);
+    
+    
+    // fake data
+    makeCircleThing("#circle3", [234,234235,3,234]);
     
     
     var myOptions = {
@@ -215,6 +216,9 @@
           days.push(0);
           days.push(0);
           days.push(0);
+          
+          // real data
+          makeCircleThing("#circle2", [postJSON[0].length, placeJSON[0].length, photosJSON[0].length]);
 
           for (var i in postJSON) {
             datestr = postJSON[0][i].updated_time;
