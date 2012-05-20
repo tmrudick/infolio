@@ -134,9 +134,11 @@
     	streetViewControl: false,
     	overviewMapControl: false
     };
+    var postData, photoData, placesData;
+    
     var map = new google.maps.Map(document.getElementById("map"), myOptions);
     
-    $.get("/data/<%= current_user.id %>/places", function(results) {
+    var placePromise = $.get("/data/<%= current_user.id %>/places", function(results) {
       placesData = results;
       var bounds = new google.maps.LatLngBounds();
       for (var i in placesData) {
@@ -150,6 +152,19 @@
         });
       }
       map.fitBounds(bounds);
-    });    
+    });
+    
+    var postPromise = $.get("/data/<%= current_user.id %>/posts", function(results) {
+      postsData = results;
+    });
+    
+    var photosPromise = $.get("/data/<%= current_user.id %>/photos", function(results) {
+        photoData = results;
+    });
+    
+    $.when(placePromise, postPromise, photosPromise).then(
+      function(placeJSON, postJSON, photosJSON){
+
+        });
   });
 </script>
