@@ -71,10 +71,10 @@ class DataController < ApplicationController
     
     places = []
     for place in fb_places
-      begin
+      #begin
         p = Place.new
         p.message = place['message']
-        p.timestamp = place['created_time']
+        p.timestamp = Time.parse(place['created_time']).to_i
         
         p.name = place['place']['name']
         p.latitude = place['place']['location']['latitude']
@@ -84,8 +84,8 @@ class DataController < ApplicationController
         p.country = place['place']['location']['country']
       
         places << p
-      rescue
-      end
+      #rescue
+      #end
     end
     
     foursquare_service = Service.where("user_id = ? AND name = ?", user_id, "foursquare").first()
