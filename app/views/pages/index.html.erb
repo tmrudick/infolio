@@ -120,6 +120,8 @@
   
   var placesData;
 
+  var placesDeferred = $.Deferred();
+
   $(function() {
     var lowSat = [{featureType: "all",stylers: [{ saturation: -100 }]}];
     
@@ -150,6 +152,11 @@
         });
       }
       map.fitBounds(bounds);
+      placesDeferred.resolve;
     });    
+  });
+  
+  $.when(placesDeferred.promise()).then(function() {
+    alert("Loaded!");
   });
 </script>

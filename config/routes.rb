@@ -20,6 +20,8 @@ Infolio::Application.routes.draw do
   match 'auth/logout' => 'oauth#logout'
   match 'auth/facebook' => 'oauth#facebook'
   match 'auth/facebook/callback' => 'oauth#facebook_callback'
+  match 'auth/foursquare' => 'oauth#foursquare'
+  match 'auth/foursquare/callback' => 'oauth#foursquare_callback'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

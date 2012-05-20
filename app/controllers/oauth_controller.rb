@@ -56,6 +56,33 @@ class OauthController < ApplicationController
 
     redirect_to :action => 'index'    
   end
+  
+  def foursquare  
+    client = OAuth2::Client.new('HG2PEZ3DEQDHHJC0NTKCLEGJLYGQY4D4BPOT3WCNRRLUBDSO', 'TUPOKWBTIYAPLEIRLXUR25TDY2VABCHMDPIGX5UJZUV3E3PD', { :site => 'http://www.foursquare.com', :authorize_url => '/oauth2/authenticate'})  
+    
+    redirect_to client.auth_code.authorize_url(:redirect_uri => 'http://localhost:3000/auth/foursquare/callback')
+  end
+  
+  def foursquare_callback
+    code = params[:code]
+    
+    client = OAuth2::Client.new('HG2PEZ3DEQDHHJC0NTKCLEGJLYGQY4D4BPOT3WCNRRLUBDSO', 'TUPOKWBTIYAPLEIRLXUR25TDY2VABCHMDPIGX5UJZUV3E3PD', { :site => 'http://foursquare.com/', :token_url => '/oauth2/access_token', :ssl => {:ca_path => Rails.root.join("/lib/curl-ca-bundle.crt").to_s}})  
+
+    token = client.auth_code.get_token(code, :redirect_uri => 'http://localhost:3000/auth/foursquare/callback')
+            
+    service = Service.where("user_id = ? AND name = ?", current_user.id, "foursquare").first()
+    
+    if (service.nil?)
+      service = Service.new
+      service.name = "foursquare"
+      service.user_id = current_user.id
+    end
+    
+    service.token = token.token
+    service.save!
+
+    redirect_to :action => 'index'
+  end
 
 def twitter_callback
     service = Service.where("name = ?", "twitter").first()

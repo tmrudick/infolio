@@ -66,10 +66,10 @@ class DataController < ApplicationController
     
     graph = Koala::Facebook::API.new(facebook_service.token)
     
-    raw_places = graph.get_connections('me', 'checkins', { 'since' => 63.days.ago })
+    fb_places = graph.get_connections('me', 'checkins', { 'since' => 63.days.ago })
     
     places = []
-    for place in raw_places
+    for place in fb_places
       begin
         p = Place.new
         p.message = place['message']
@@ -82,6 +82,26 @@ class DataController < ApplicationController
         p.state = place['place']['location']['state']
         p.country = place['place']['location']['country']
       
+        places << p
+      rescue
+      end
+    end
+    
+    foursquare_service = Service.where("user_id = ? AND name = ?", user_id, "foursquare").first()
+    
+    client = Foursquare2::Client.new(:oauth_token => foursquare_service.token)
+    foursquare_places = client.user_checkins
+    for place in foursquare_places["items"]
+      begin
+        p = Place.new
+        p.name = place["venue"]["name"]
+        p.timestamp = place["createdAt"]
+        p.latitude = place["venue"]["location"]["lat"]
+        p.longitude = place["venue"]["location"]["lng"]
+        p.city = place["venue"]["location"]["city"]
+        p.state = place["venue"]["location"]["state"]
+        p.country = place["venue"]["location"]["country"]
+        
         places << p
       rescue
       end
