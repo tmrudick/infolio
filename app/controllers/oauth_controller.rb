@@ -54,7 +54,7 @@ class OauthController < ApplicationController
     service.token = access_token
     service.save!
 
-    redirect_to :action => 'index'    
+    redirect_to :controller => 'pages', :action => 'index', :user_id => current_user.id
   end
   
   def foursquare  
@@ -81,7 +81,7 @@ class OauthController < ApplicationController
     service.token = token.token
     service.save!
 
-    redirect_to :action => 'index'
+    redirect_to :controller => 'pages', :action => 'index', :user_id => current_user.id
   end
 
 def twitter_callback
@@ -95,6 +95,6 @@ def twitter_callback
     service.token = params[:token]
     service.save!
 
-    redirect_to :controller => 'home', :action => 'index'    
+    redirect_to :controller => 'pages', :action => 'index', :user_id => current_user.id
   end
 end

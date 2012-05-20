@@ -22,6 +22,7 @@ ul {
 }
 
 #logo {
+  display: block;
 	background:url('/assets/infolio_logo.png') no-repeat transparent;
 	height:35px;
 	width:auto;

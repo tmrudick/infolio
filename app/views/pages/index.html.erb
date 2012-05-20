@@ -1,6 +1,5 @@
 <div id="navbar">
-		<div id="logo">
-		</div>
+		<a href="/" id="logo"></a>
 	</div>
 	<div id="wrapper">
 		<div id="profile">
@@ -14,14 +13,10 @@
 				
 			<div id="content">
 				<h1><%= current_user.first_name %> <%= current_user.last_name %></h1>
-				
-				
 				<% if current_user.twitter %>
 				<p><%= Twitter.user("#{current_user.twitter}").description %></p>
 				<% end %>
 				<br>
-				
-				
 			</div>
 		</div>
 		<div id="avatar">
