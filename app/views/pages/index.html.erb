@@ -35,7 +35,6 @@
 			<div class="block1">
 				<p>Type of Check-Ins</p>
 				<hr>
-        <canvas id="donut" datasrc="/assets/donut.pjs" width="200" height="200"></canvas>
 			</div>
 			<div class="block1">
 				<p>Type of Likes</p>
@@ -85,24 +84,63 @@
 			<% end %>
 			</div>
 		</div>
+		<div class="clear"></div>
 		<div id="module4">
+		  <div class="block4">
+		    <p class="block4p">Places</p>
+		    <hr>
+		    <div id="map" style="width:890px; background-color: #E5E3DF;"></div>
+		  </div>
 		</div>
 	</div>
+	<style type="text/css">
+    #map { height: 100% }
+    #map {
+      margin: 25px auto;
+    	background: #2e2e2e !important
+    }
+  </style>
 	
+  
+
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCv31jeSAZxiIvrNbXd69mJVi2Md38e1Oc&sensor=false"></script>
 <script type="text/javascript">
   var postData;
   var getPosts = $.get("/data/<%= current_user.id %>/posts", function(results) {
     postData = results;
   });
-
+  
   var placesData;
-  var getPlaces = $.get("/data/<%= current_user.id %>/places", function(results) {
-    placeData = results;
-  });
 
   $(function() {
-    $.when(getPosts, getPlaces).then(function() {
-      // do something with data
+    var lowSat = [{featureType: "all",stylers: [{ saturation: -100 }]}];
+    
+    var myOptions = {
+    	mapTypeId: google.maps.MapTypeId.ROADMAP,
+    	styles: lowSat,
+    	mapTypeControl: false,
+    	panControl: false,
+    	zoomControl: true,
+    	mapTypeControl: false,
+    	scaleControl: false,
+    	streetViewControl: false,
+    	overviewMapControl: false
+    };
+    var map = new google.maps.Map(document.getElementById("map"), myOptions);
+    $.get("/data/<%= current_user.id %>/places", function(results) {
+      placesData = results;
+      var bounds = new google.maps.LatLngBounds();
+      for (var i in placesData) {
+        var place = placesData[i];
+        var myLatlng = new google.maps.LatLng(place.latitude,place.longitude);
+        bounds.extend(myLatlng);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title:place.message
+        });
+      }
+      map.fitBounds(bounds);
     });
   });
 </script>
