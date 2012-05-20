@@ -5,7 +5,7 @@
 }
 
 body {
-	background:url(images/txture.png) repeat;
+	background: url('/assets/txture.png') repeat;
 }
 
 #navbar {
@@ -161,11 +161,11 @@ hr {
 /* ------------------- FONTS ---------------------- */
 @font-face {
     font-family: 'SansitaOneRegular';
-    src: url('type/SansitaOne-webfont.eot');
-    src: url('type/SansitaOne-webfont.eot?#iefix') format('embedded-opentype'),
-         url('type/SansitaOne-webfont.woff') format('woff'),
-         url('type/SansitaOne-webfont.ttf') format('truetype'),
-         url('type/SansitaOne-webfont.svg#SansitaOneRegular') format('svg');
+    src: url('/assets/SansitaOne-webfont.eot');
+    src: url('/assets/SansitaOne-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/assets/SansitaOne-webfont.woff') format('woff'),
+         url('/assets/SansitaOne-webfont.ttf') format('truetype'),
+         url('/assets/SansitaOne-webfont.svg#SansitaOneRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 
