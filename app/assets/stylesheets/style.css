@@ -125,6 +125,13 @@ hr {
 	letter-spacing:3px;
 }
 
+#postcat {
+	margin:auto;
+	height:225px;
+	width:225px;
+	background:transparent;
+}
+
 #module2 {
 	width:620px;
 	height:245px;
