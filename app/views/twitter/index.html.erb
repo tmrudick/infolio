@@ -5,7 +5,7 @@
 
 <p>
 
-<% if current_user.id == nil %>
+<% if current_user.twitter == nil %>
 <%= link_to 'Add Twitter Handle', edit_user_path(current_user.id) %>
 <% else %>
 
