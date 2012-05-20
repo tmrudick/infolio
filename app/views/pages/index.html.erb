@@ -42,13 +42,14 @@
 		</div>
 		<div id="module3">
 			<div class="block3">
-				<p>Most Active Friends</p>
+				<p class="block3p">Twitter Statistics</p>
 				<hr>
-				<p>
-				Last Seen in: <%= Twitter.user("#{current_user.twitter}").location %><br>
-				Number of Tweets: <%= Twitter.user("#{current_user.twitter}").statuses_count %> <br>
-				Followers: <%= Twitter.user("#{current_user.twitter}").followers_count %>
-				</p>
+				<p class="statscaption force">Last seen in</p>
+				<p class="statsdata force"><%= Twitter.user("#{current_user.twitter}").location %></p>
+				<p class="statscaption force">Number of tweets</p>
+				<p class="statsdata force"><%= Twitter.user("#{current_user.twitter}").statuses_count %></p>
+				<p class="statscaption force">Number of followers</p>
+				<p class="statsdata force"><%= Twitter.user("#{current_user.twitter}").followers_count %></p>
 			</div>
 		</div>
 		<div id="module4">
