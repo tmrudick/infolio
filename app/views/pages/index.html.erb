@@ -147,12 +147,16 @@
 		  </div>
 		</div>
 	</div>
+	
+	<div id="popup" style="display:none;position:absolute;background:#fff;padding:5px;border:1px solid #666;">
+	  <p></p>
+	</div>
 
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCv31jeSAZxiIvrNbXd69mJVi2Md38e1Oc&sensor=false"></script>
 <script type="text/javascript">
   $(function() {
     
-    var makeCircleThing = function (elementInfo, dataIn) {
+    var makeCircleThing = function (elementInfo, dataIn, labels) {
       var data = dataIn;
 
 			var w = 225,
@@ -166,20 +170,20 @@
 			    .attr("width", w)
 			    .attr("height", h)
 			    .append("svg:g")
-			    .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+			    .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")").on("mouseout", function() {
+			      $("#popup").hide();
+			    });
 			
 			var arcs = svg.selectAll("path")
 			    .data(donut(data))
 			  .enter().append("svg:path")
 			    .attr("fill", function(d, i) { return color(i); })
 			    .attr("d", arc)
-			    .each(function(d) { this._current = d; });
-			
-			d3.select(elementInfo).on("click", function() {
-			  data = data === data ? data : data; // swap the data
-			  arcs = arcs.data(donut(data)); // update the data
-			  arcs.attr("d", arc); // redraw the arcs
-			});
+			    .each(function(d) { this._current = d; }).on("mouseover", function(obj, index) {
+  						$("#popup p").text(labels[index]);
+  						$("#popup").css({"left":d3.event.pageX + "px","top":d3.event.pageY + "px", "position": "absolute"});
+  						$("#popup").fadeIn(100);
+			    });
 			
 			// Store the currently-displayed angles in this._current.
 			// Then, interpolate from this._current to the new angles.
@@ -249,17 +253,17 @@
           days.push(0);
           
           // real data
-          makeCircleThing("#circle2", [postJSON[0].length, placeJSON[0].length, photosJSON[0].length]);
-
-          for (var i in postJSON) {
-            datestr = postJSON[0][i].updated_time;
-            date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
-            days[date.getDay()]++;
-          }
+          makeCircleThing("#circle2", [postJSON[0].length, placeJSON[0].length, photosJSON[0].length], ["Posts", "Places", "Photos"]);
           
+          for (var i in postJSON) {
+               datestr = postJSON[0][i].updated_time;
+               date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
+               days[date.getDay()]++;
+             }
+             
           for (var j in placeJSON) {    
             datestr = placeJSON[0][j].timestamp;
-            date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
+            date = Date.parse(placeJSON[0][j].timestamp);
             days[date.getDay()]++;
           }
           
@@ -268,12 +272,6 @@
             date = new Date (Date.parse(datestr.substr(0,datestr.indexOf("T"))));
             days[date.getDay()]++;
           }
-
-
         });
-  });
-  
-  $.when(placesDeferred.promise()).then(function() {
-    alert("Loaded!");
   });
 </script>
