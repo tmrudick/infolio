@@ -6,7 +6,7 @@
 		<div id="profile">
 			<div id="content">
 				<h1><%= current_user.first_name %></h1>
-				<p>A fun loving computer programmer with ever an ever-expanding mop of hair.</p>
+				<p><%= Twitter.user("#{current_user.twitter}").description %></p>
 				<br>
 				<p>Connected Services
 				<ul>
