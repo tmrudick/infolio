@@ -4,17 +4,24 @@
 	</div>
 	<div id="wrapper">
 		<div id="profile">
-			<div id="content">
-				<h1><%= current_user.first_name %></h1>
-				<p><%= Twitter.user("#{current_user.twitter}").description %></p>
-				<br>
-				
-				<div id="socialicons">
+		
+		<div id="socialicons">
 				<%= image_tag("fblogo.png", :size => "25x25") %>
 				<%= if current_user.twitter 
 				image_tag("twitterlogo.png", :size => "25x25") 
 				end %>
-				</div>
+		</div>
+				
+			<div id="content">
+				<h1><%= current_user.first_name %></h1>
+				
+				
+				<% if current_user.twitter %>
+				<p><%= Twitter.user("#{current_user.twitter}").description %></p>
+				<% end %>
+				<br>
+				
+				
 			</div>
 		</div>
 		<div id="avatar">
@@ -39,24 +46,43 @@
 			<div class="block2">
 				<p>Twitter Activity</p>
 				<hr>
+				<% if current_user.twitter %>
 				<p>
-				<%= 
-				Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 5, :result_type => "recent").map do |status|
-					"#{status.text}" 
- 				  end %>
+				<%= Twitter.search("from:#{current_user.twitter}", :include_entities=>true, :rpp => 5, :result_type => "recent").map do |status|
+ 				 @tweets = "#{status.text}" 
+  					 end 
+  				%>
+  				
+  				
+ 					  
+								
 				</p>
+				<% else %>
+				
+				Give us your twitter handle
+				<%= link_to 'Add Twitter Handle', edit_user_path(current_user.id) %>
+				
+				
+				<% end %>
 			</div>
 		</div>
+		
 		<div id="module3">
 			<div class="block3">
 				<p class="block3p">Twitter Statistics</p>
 				<hr>
+				<% if current_user.twitter %>
 				<p class="statscaption force">Last seen in</p>
 				<p class="statsdata force"><%= Twitter.user("#{current_user.twitter}").location %></p>
 				<p class="statscaption force">Number of tweets</p>
 				<p class="statsdata force"><%= Twitter.user("#{current_user.twitter}").statuses_count %></p>
 				<p class="statscaption force">Number of followers</p>
 				<p class="statsdata force"><%= Twitter.user("#{current_user.twitter}").followers_count %></p>
+			<% else %>
+			
+			<p> Give us your twitter account </p>
+			
+			<% end %>
 			</div>
 		</div>
 		<div id="module4">
