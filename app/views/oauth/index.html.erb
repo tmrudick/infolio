@@ -3,7 +3,7 @@
 <h2>Connected Services</h2>
 <ul>
   <li><%= link_to "Facebook", auth_facebook_url %> <% if @service_hash["facebook"] %>- Connected<%end%></li>
-  <li><%= link_to "Twitter", :controller => 'twitter' %> </li>
+  <li><%= link_to "Twitter", :controller => 'twitter' %> <% if current_user.twitter %>- Connected<%end%></li>
 </ul>
 
 <p>userid: <%= current_user.id %>
