@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+require "word_counter.rb"
+
 class DataController < ApplicationController
   
   def posts
@@ -85,5 +88,27 @@ class DataController < ApplicationController
     end
 
     render :json => places
+  end
+
+  def words
+
+    facebook_service = Service.where("name = ?", "facebook").first()
+    
+    if (facebook_service.nil?)
+      render :json => "{\"error\":\"Data Not Found\"}"
+      return
+    end
+    
+    graph = Koala::Facebook::API.new(facebook_service.token)
+  
+    posts = graph.get_connections('me', 'statuses')
+    
+    messages = []
+    posts.each {|p| messages << p["message"]}
+
+    frequency_table = WordCounter.new(messages).sorted_table
+    
+    render :json => frequency_table
+    
   end
 end

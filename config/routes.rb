@@ -13,6 +13,8 @@ Infolio::Application.routes.draw do
   match 'data/:user_id/places' => 'data#places'
   match 'data/:user_id/photos' => 'data#photos'
   match 'data/:user_id/profilePic' => 'data#profilePic'
+
+  match 'data/words' => 'data#words'
   
   # OAuth callbacks
   match 'auth/logout' => 'oauth#logout'
