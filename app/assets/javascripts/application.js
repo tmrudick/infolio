@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require ./processing
+//= require ./Tween.lib
 //= require_tree .

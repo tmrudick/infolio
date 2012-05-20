@@ -27,6 +27,7 @@
 			<div class="block1">
 				<p>Type of Check-Ins</p>
 				<hr>
+        <canvas id="donut" datasrc="/assets/donut.pjs" width="200" height="200"></canvas>
 			</div>
 			<div class="block1">
 				<p>Type of Likes</p>
@@ -48,5 +49,21 @@
 		<div id="module4">
 		</div>
 	</div>
+	
+<script type="text/javascript">
+  var postData;
+  var getPosts = $.get("/data/<%= current_user.id %>/posts", function(results) {
+    postData = results;
+  });
 
+  var placesData;
+  var getPlaces = $.get("/data/<%= current_user.id %>/places", function(results) {
+    placeData = results;
+  });
 
+  $(function() {
+    $.when(getPosts, getPlaces).then(function() {
+      // do something with data
+    });
+  });
+</script>
